@@ -26,24 +26,28 @@ window.addEventListener("load", function ()
 	c.lineTo(700,0);
 	c.moveTo(0,0);
 	c.lineTo(0,700);
-
+	
+	
+	var dataArray = [0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,1,1,0,0,0,0,1,0,0,0,0,1,0,0,1,1,0,0,0,1,1,0,0,0,0,1,0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,0,1,1,0,0,1,0,1,0,0,0,1,1,0,0,1,1,0,0,1,1,1,0,1,0,1,1,0,0,1,1,0,1,1,1,1,0,1,0,1,1,0,0,0,0,0,1,1,0,1,0,1,1,1,1,0,1,0,0,0,1,1,0,1,0,1,0,1,1,0,1,1,1,1,1,1,0,1,0,1,1,1,1,0,1,0,0,1,1,1,1,1,1,0,0,1,1,0,1,0,0,1,1,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var q=0;
 	for (var i=0;i<gridNum;i++) {
 		gridArray[i] = new Array ();
 		for (var p=0;p<gridNum;p++) {
-			gridArray[i][p] = 0;
-			previewHtml+="<div class='previewCell' id='b"+i+"_"+p+"'></div>";
-            
-			/*
-            c.moveTo(oldPos.x, oldPos.y);
-            c.lineTo(pos.x, pos.y);
-            c.stroke();
-			*/
-			
-			c.rect(i*50-0.5, p*50-0.5, 50, 50);
+			gridArray[i][p] = dataArray[q];
+			c.strokeStyle = "#c0c0c0";
+			c.rect(p*50-0.5, i*50-0.5, 50, 50);
+			if (gridArray[i][p] == 1) {
+				previewHtml+="<div class='previewCell k' id='b"+i+"_"+p+"'></div>";
+				c.strokeStyle = "#000000";
+				c.fillRect(p*50, i*50, 49, 49);
+			} else {
+				previewHtml+="<div class='previewCell' id='b"+i+"_"+p+"'></div>";
+			}
 			c.stroke();
-
+			q++;
 		}
 	}
+	
      c.closePath();
 	$("#previewBox").html(previewHtml);
 	
@@ -62,9 +66,9 @@ window.addEventListener("load", function ()
 		for (var i=0;i<gridNum;i++) {
 			for (var p=0;p<gridNum;p++) {
 				if (gridArray[i][p]==0) {
-					$("#b"+p+"_"+i).css("background","#FFFFFF");
+					$("#b"+i+"_"+p).css("background","#FFFFFF");
 				} else {
-					$("#b"+p+"_"+i).css("background","#000000");
+					$("#b"+i+"_"+p).css("background","#000000");
 				}
 				if (dataNum=="") {
 				}  else {
@@ -98,9 +102,9 @@ window.addEventListener("load", function ()
 			var posX = Math.floor(pos.x/50);
 			var posY = Math.floor(pos.y/50);
 			if (drawColor == "black") {
-				gridArray[posX][posY] = 1;
+				gridArray[posY][posX] = 1;
 			} else {
-				gridArray[posX][posY] = 0;
+				gridArray[posY][posX] = 0;
 			}
 			c.fillRect(posX*50, posY*50, 49, 49);
             oldPos = pos;
